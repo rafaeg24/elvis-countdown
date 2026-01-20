@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¿Cuántos días faltan para que llegue Elvis?</title>
+    <style>
+        :root {
+            --accent: #ff3b3b;
+            --bg-dark: rgba(0, 0, 0, 0.6);
+            --text-light: #ffffff;
+            --muted: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            color: var(--text-light);
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: fixed;
+            inset: 0;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            /* evita que se estire */
+            filter: blur(6px) brightness(0.6);
+            background-color: #000;
+            /* relleno si sobra espacio */
+            z-index: -2;
+        }
+
+        @keyframes bgFade {
+            from {
+                filter: blur(6px) brightness(0.55);
+            }
+
+            to {
+                filter: blur(4px) brightness(0.7);
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg,
+                    rgba(0, 0, 0, 0.65) 0%,
+                    rgba(0, 0, 0, 0.4) 100%);
+            z-index: -1;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px 24px 64px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-bottom: 32px;
+            font-size: 1rem;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px 18px;
+            min-width: 110px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .time {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--accent);
+        }
+
+        .label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--muted);
+            z-index: 1;
+        }
+
+        .footer span {
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background" id="bg"></div>
+    <div class="overlay"></div>
+
+    <main class="container">
+        <h1>¿Cuántos días faltan para que llegue Elvis?</h1>
+        <p class="subtitle">Cuenta regresiva hasta el primer vuelo ✈️</p>
+
+        <section class="countdown">
+            <div class="time-box">
+                <div class="time" id="days">0</div>
+                <div class="label">Días</div>
+            </div>
+            <div class="time-box">
+                <div class="time" id="hours">0</div>
+                <div class="label">Horas</div>
+            </div>
+            <div class="time-box">
+                <div class="time" id="minutes">0</div>
+                <div class="label">Minutos</div>
+            </div>
+            <div class="time-box">
+                <div class="time" id="seconds">0</div>
+                <div class="label">Segundos</div>
+            </div>
+        </section>
+
+        <div class="footer">Hecho con ❤️ esperando a <span>Elvis</span></div>
+    </main>
+
+    <script>
+        // --- Fondo aleatorio desde /assets ---
+        const images = [
+            'assets/1.jpg',
+            'assets/2.jpg',
+            'assets/3.jpg',
+            'assets/4.jpg',
+            'assets/5.jpg',
+            'assets/6.jpg',
+            'assets/7.jpg',
+            'assets/9.jpg',
+            'assets/10.jpg',
+            'assets/11.jpg',
+            'assets/12.jpg',
+            'assets/13.jpg'
+        ];
+
+        const randomImage = images[Math.floor(Math.random() * images.length)];
+        document.getElementById('bg').style.backgroundImage = `url('${randomImage}')`;
+
+        // --- Countdown ---
+        const targetDate = new Date('2026-01-27T16:38:00-03:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff <= 0) return;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+
+</html>
