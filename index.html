@@ -34,7 +34,7 @@
             background-position: center;
             background-size: contain;
             /* evita que se estire */
-            filter: blur(6px) brightness(0.6);
+            filter: none;
             background-color: #000;
             /* relleno si sobra espacio */
             z-index: -2;
@@ -53,9 +53,7 @@
         .overlay {
             position: fixed;
             inset: 0;
-            background: linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.65) 0%,
-                    rgba(0, 0, 0, 0.4) 100%);
+            background: none;
             z-index: -1;
         }
 
@@ -74,12 +72,19 @@
             font-size: clamp(1.8rem, 4vw, 3rem);
             margin-bottom: 12px;
             letter-spacing: -0.5px;
+            background: rgba(0, 0, 0, 0.55);
+            padding: 12px 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
         }
 
         .subtitle {
             color: var(--muted);
             margin-bottom: 32px;
             font-size: 1rem;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 8px 16px;
+            border-radius: 12px;
         }
 
         .countdown {
